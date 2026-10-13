@@ -1,0 +1,19 @@
+{
+ "name": "noodle-agent-browser",
+ "version": "1.0.0",
+ "description": "NOODLE - agent-native browser by Merlin",
+ "main": "index.js",
+ "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1"
+ },
+ "keywords": [],
+ "author": "",
+ "license": "MIT",
+ "type": "commonjs",
+ "dependencies": {
+  "playwright": "^1.64.0"
+ },
+ "bin": {
+  "noodle": "./cli.js"
+ }
+}

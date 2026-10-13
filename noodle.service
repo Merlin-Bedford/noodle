@@ -1,0 +1,14 @@
+[Unit]
+Description=NOODLE agent browser daemon (by Merlin)
+After=network-online.target
+
+[Service]
+User=server
+WorkingDirectory=/home/server/noodle
+ExecStart=/usr/bin/xvfb-run -a /usr/bin/node /home/server/noodle/noodle.js --port=8791
+Restart=on-failure
+RestartSec=5
+Environment=NOODLE_DATA=/home/server/noodle/profiles
+
+[Install]
+WantedBy=multi-user.target
