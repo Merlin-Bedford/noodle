@@ -31,6 +31,7 @@ noodle read
 | POST /click / /type / /press | `{ref,...}` | `{ok, url, state}` |
 | GET /read | — | `{title, state, text}` |
 | GET /state / /back / POST /close | — | current state |
+| GET /budget | — | per-domain strike counts + cooldowns (the discipline is visible) |
 
 ## Rules baked in (non-negotiable)
 1. No fingerprint spoofing, no captcha-solving farms, no credential theft.

@@ -31,8 +31,9 @@ function req(method, path, body) {
       case 'press': console.log(await req('POST', '/press', { key: pos[0] || 'Enter', profile })); break;
       case 'close': console.log(await req('POST', '/close', { profile })); break;
       case 'health': console.log(await req('GET', '/health')); break;
-      default: console.log(`NOODLE v0 by Merlin — agent browser
-commands: open <url> | snapshot | click <ref> | type <ref> <text> | press <key> | read | state | back | close | health
+      case 'budget': console.log(await req('GET', '/budget')); break;
+      default: console.log(`NOODLE v1.1 by Merlin — agent browser
+commands: open <url> | snapshot | click <ref> | type <ref> <text> | press <key> | read | state | back | close | health | budget
 flags: --profile <id> --challenge <ms> --port <n>
 daemon: xvfb-run -a node noodle.js --port=8791`);
     }

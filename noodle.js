@@ -141,6 +141,7 @@ const TOOLS = {
     { cmd: 'press', method: 'POST', path: '/press', body: { key: 'Enter|Tab|...', profile: 'string?' } },
     { cmd: 'read', method: 'GET', path: '/read', query: { profile: 'string?' }, returns: '{title,state,text}' },
     { cmd: 'extract', method: 'POST', path: '/extract', body: { want: [{ role: 'string', contains: 'string?' }], profile: 'string?' }, returns: '{found:[{role,name,href}]}' },
+    { cmd: 'budget', method: 'GET', path: '/budget', returns: '{law, hosts:{<domain>:{strikes,cooldown_until,cooldown_ms_left}}}' },
     { cmd: 'state', method: 'GET', path: '/state' },
     { cmd: 'back', method: 'POST', path: '/back' },
     { cmd: 'close', method: 'POST', path: '/close' }
@@ -156,8 +157,20 @@ const server = http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x');
   const p = u.pathname;
   try {
-    if (p === '/health') return json(res, 200, { ok: true, name: 'noodle', by: 'merlin', v: '1.0' });
+    if (p === '/health') return json(res, 200, { ok: true, name: 'noodle', by: 'merlin', v: '1.1' });
     if (p === '/tools') return json(res, 200, TOOLS);
+    if (p === '/budget') {
+      const now = Date.now();
+      const hosts = {};
+      for (const [h, s] of Object.entries(strikes)) {
+        hosts[h] = {
+          strikes: s.n || 0,
+          cooldown_until: s.until && now < s.until ? new Date(s.until).toISOString() : null,
+          cooldown_ms_left: s.until && now < s.until ? s.until - now : 0
+        };
+      }
+      return json(res, 200, { law: '4 strikes = 30min cooldown, persisted across restarts', hosts });
+    }
     const b = req.method === 'POST' ? await body(req) : {};
     const profile = b.profile || u.searchParams.get('profile') || 'default';
     const s = await session(profile);

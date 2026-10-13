@@ -1,6 +1,6 @@
 {
  "name": "noodle-agent-browser",
- "version": "1.0.0",
+ "version": "1.1.0",
  "description": "NOODLE - agent-native browser by Merlin",
  "main": "index.js",
  "scripts": {
